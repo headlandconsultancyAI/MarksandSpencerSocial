@@ -1,0 +1,89 @@
+name: Daily data refresh
+
+# GitHub schedules run in UTC, so there are two triggers and the gate job
+# keeps whichever one is 07:30 in London today (BST in summer, GMT in winter).
+on:
+  schedule:
+    - cron: '30 6 * * *'   # 07:30 London while clocks are on BST
+    - cron: '30 7 * * *'   # 07:30 London while clocks are on GMT
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'run = start the Apify tasks now; latest = use their last successful runs'
+        default: 'run'
+        type: choice
+        options: [run, latest]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.check.outputs.go }}
+    steps:
+      - id: check
+        run: |
+          offset=$(TZ=Europe/London date +%z)
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "30 6 * * *" ] && [ "$offset" = "+0100" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event.schedule }}" = "30 7 * * *" ] && [ "$offset" = "+0000" ]; then
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=false" >> "$GITHUB_OUTPUT"
+            echo "Not 07:30 in London for this trigger, skipping."
+          fi
+
+  refresh:
+    needs: gate
+    if: needs.gate.outputs.go == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Pull from Apify and rebuild the data
+        env:
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          APIFY_TASK_LINKEDIN: ${{ vars.APIFY_TASK_LINKEDIN }}
+          APIFY_TASK_INSTAGRAM: ${{ vars.APIFY_TASK_INSTAGRAM }}
+          APIFY_TASK_X: ${{ vars.APIFY_TASK_X }}
+          APIFY_TASK_TIKTOK: ${{ vars.APIFY_TASK_TIKTOK }}
+          APIFY_MODE: ${{ inputs.mode || vars.APIFY_MODE || 'run' }}
+          APIFY_WAIT_MINUTES: ${{ vars.APIFY_WAIT_MINUTES || '60' }}
+        run: python scripts/refresh.py
+
+      - name: Commit the new data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/data
+          if git diff --cached --quiet; then
+            echo "No data changes today."
+          else
+            git commit -m "Daily data refresh $(TZ=Europe/London date +%F)"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
