@@ -1,0 +1,27 @@
+{
+ "built_at": "2026-11-22T09:49:54Z",
+ "window_start": "2025-11-20",
+ "window_end": "2026-11-20",
+ "sources": {
+  "linkedin": {
+   "fetched": true,
+   "scraped_posts": 429,
+   "posts_in_window": 410
+  },
+  "instagram": {
+   "fetched": true,
+   "scraped_posts": 1558,
+   "posts_in_window": 1505
+  },
+  "x": {
+   "fetched": true,
+   "scraped_posts": 100,
+   "posts_in_window": 47
+  },
+  "tiktok": {
+   "fetched": true,
+   "scraped_posts": 29,
+   "posts_in_window": 29
+  }
+ }
+}

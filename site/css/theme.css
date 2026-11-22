@@ -1,0 +1,45 @@
+/* Design tokens the dashboard styles use. Change colours and type here. */
+:root {
+  --color-fg: #111111;
+  --color-fg-muted: #5f5f5f;
+  --color-bg: #ffffff;
+  --color-panel: #ffffff;
+  --color-border-line: #e2e2e2;
+  --color-ok: #2e7d4f;
+  --color-warn: #b7791f;
+  --color-bad: #c0392b;
+
+  --series-1: #2f6db5;   /* LinkedIn, and brand channels on the crossover tab */
+  --series-2: #c2477a;   /* Instagram */
+  --series-3: #6b6b6b;   /* X */
+  --series-4: #3a8f6b;
+
+  --font-anthropic-sans: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  --font-anthropic-serif: Georgia, "Times New Roman", serif;
+  --cds-font-size-caption: 12px;
+  --cds-font-size-body: 14px;
+  --cds-font-size-heading: 18px;
+  --cds-font-size-title: 30px;
+  --cds-font-weight-medium: 600;
+
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 20px; --cds-gap-xl: 32px;
+  --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 20px; --cds-pad-xl: 32px;
+  --cds-radius: 4px;
+
+  --cds-chart-grid: #ededed;
+  --cds-chart-axis: #bdbdbd;
+  --cds-chart-reference: #8a8a8a;
+  --cds-text-secondary: #6b6b6b;
+  --cds-surface-popover: #ffffff;
+  --cds-border: #d9d9d9;
+  --cds-shadow-popover: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); line-height: 1.4; }
+.page { max-width: 1200px; margin: 0 auto; padding: 28px 24px 48px; }
+.page-foot { margin-top: 40px; padding-top: 12px; border-top: 1px solid var(--color-border-line); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+
+/* Loading placeholder */
+.dash-skeleton { position: relative; color: transparent !important; }
+.dash-skeleton::after { content: ""; position: absolute; inset: 2px 0; background: linear-gradient(90deg, #f1f1f1, #e6e6e6, #f1f1f1); border-radius: 3px; }

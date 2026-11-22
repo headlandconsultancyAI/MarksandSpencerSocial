@@ -1,0 +1,25 @@
+{
+  "window_days": 365,
+  "leaders": [
+    {"name": "Stuart Machin", "role": "Chief Executive", "linkedin": "stuartmachin", "instagram": "thestuartmachin"},
+    {"name": "Alex Freudmann", "role": "Managing Director, Food", "linkedin": "alex-freudmann-8563b4", "instagram": "alex_mands_food"},
+    {"name": "Kathryn Turner", "role": "Director of Product Development, M&S Food", "instagram": "kathryn.lturner", "tiktok": "kathrynlturner"},
+    {"name": "Maddy Evans", "role": "Director, M&S Women", "linkedin": "maddy-sillem-evans-88689870", "instagram": "maddyevansmands"},
+    {"name": "Hayley Tatum", "role": "Chief People Officer", "linkedin": "hayleytatum"},
+    {"name": "John Lyttle", "role": "Managing Director, Fashion, Home & Beauty", "linkedin": "john-lyttle-633804b8"},
+    {"name": "Mark Lemming", "role": "Managing Director, International", "linkedin": "mark-lemming-925987b"},
+    {"name": "Alison Dolan", "role": "Chief Financial Officer", "linkedin": "alisonanndolan"},
+    {"name": "Sacha Berendji", "role": "Operations Director", "linkedin": "sacha-berendji-a7242524b"},
+    {"name": "James", "role": "Home Visual Merchandising, M&S Insider", "instagram": "marksandspencer_james",
+     "note": "Not tracked yet: add marksandspencer_james to the Instagram Apify task"}
+  ],
+  "corporate": {
+    "linkedin": {"name": "M&S (company page)", "company": "marks-and-spencer", "author_name": "Marks and Spencer", "role": "Corporate LinkedIn page"},
+    "instagram": {"name": "M&S News", "handle": "marksandspencernews", "role": "Corporate press team on Instagram"},
+    "x": {"name": "M&S News", "handle": "MandSnews", "role": "Corporate press team on X"}
+  },
+  "brand": [
+    {"name": "M&S", "instagram": "marksandspencer", "role": "Main M&S brand account on Instagram"},
+    {"name": "M&S Food", "instagram": "marksandspencerfood", "role": "M&S Food brand account on Instagram"}
+  ]
+}

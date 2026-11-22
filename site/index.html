@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marks &amp; Spencer: a corporate social snapshot</title>
+<link rel="icon" href="assets/ms_tile.png">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="css/corporate.css">
+<link rel="stylesheet" href="css/stories.css">
+<script src="js/vendor/d3.min.js"></script>
+<script src="js/dash-lite.js"></script>
+</head>
+<body>
+<main class="page">
+<div class="ms-wrap">
+  <header class="ms-head" id="header">
+    <img class="ms-logo" src="assets/ms_tile.png" alt="M&amp;S">
+    <div>
+      <p class="ms-kicker">Marks &amp; Spencer</p>
+      <h1 class="ms-title">A corporate social snapshot</h1>
+    </div>
+  </header>
+
+  <nav class="ms-tabs" role="tablist" id="tabs">
+    <button class="ms-tab" role="tab" id="tab-leadership" data-tab="leadership" aria-selected="true">Leadership</button>
+    <button class="ms-tab" role="tab" id="tab-corporate-button" data-tab="corporate" aria-selected="false">Corporate social</button>
+    <button class="ms-tab" role="tab" id="tab-stories-button" data-tab="stories" aria-selected="false">Corporate and brand crossover</button>
+  </nav>
+
+  <section class="ms-section" id="leadership" role="tabpanel">
+    <h2 class="ms-h2" id="leaders-heading">Senior leaders ranked by total engagement, with what works best for each</h2>
+    <p class="ms-help">Badges mark a leader who tops a platform. Each card shows where their engagement comes from, the topic that lands best and their single best post.</p>
+    <div class="ms-cards" id="leader-cards" data-draw="leader_cards" data-source="leader_rank leader_platform"></div>
+
+    <h2 class="ms-h2" id="quiet-heading">Leaders not posting, or not tracked yet</h2>
+    <div class="ms-quiet" id="quiet-leaders" data-draw="quiet" data-source="accounts"></div>
+
+    <h2 class="ms-h2" id="topics-heading">Share of each leader's engagement by topic</h2>
+    <p class="ms-help">Darker cells mean a bigger share of that leader's engagement. Posts with no caption or no clear topic are left out.</p>
+    <div class="ms-scroll">
+      <table class="ms-heat" id="topic-grid">
+        <thead><tr><th>Leader</th><th data-topic="Food and product">Food and product</th><th data-topic="Fashion and beauty">Fashion and beauty</th><th data-topic="Colleagues and culture">Colleagues and culture</th><th data-topic="Stores and openings">Stores and openings</th><th data-topic="Business, results and policy">Business, results and policy</th><th data-topic="International">International</th><th data-topic="Community and charity">Community and charity</th></tr></thead>
+        <tbody data-draw="topic_rows"></tbody>
+      </table>
+    </div>
+
+    <h2 class="ms-h2" id="platform-heading">Posts and engagement by leader and platform</h2>
+    <div class="ms-scroll">
+      <table class="ms-table" id="platform-table" data-source="leader_platform" data-row-key="leader,platform">
+        <thead><tr><th data-field="leader">Leader</th><th data-field="platform">Platform</th><th class="ms-num" data-field="posts">Posts</th><th class="ms-num" data-field="engagements">Engagements</th><th class="ms-num" data-field="per_post">Per post</th><th class="ms-num" data-field="comments_per_post">Comments per post</th><th class="ms-num" data-field="share">Share of leader's total</th></tr></thead>
+        <tbody data-draw="platform_rows"></tbody>
+      </table>
+    </div>
+
+    <details class="ms-details" id="method">
+      <summary>How this is worked out</summary>
+      <ul>
+        <li>Data is scraped from each leader's own LinkedIn, Instagram and TikTok profiles, covering the last 12 months. It refreshes every morning at 7.30.</li>
+        <li>Kathryn Turner's TikTok account started on 14 May 2026, so her TikTok numbers cover about six months.</li>
+        <li>Posts made by other accounts that appear on a leader's profile, such as collaborations with M&amp;S News or the Cabinet Office, are left out. Leaders' own reposts with commentary are kept.</li>
+        <li>Engagements add up likes or reactions, comments and shares. TikTok saves are included. Instagram shares and LinkedIn views aren't in the data.</li>
+        <li>One Instagram post has its likes hidden, so only its comments count.</li>
+        <li>Topics are tagged from each post's words against a fixed list. A post goes to the topic it mentions most.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section class="ms-section cs" id="corporate" role="tabpanel" hidden>
+    <header class="cs-hero" id="cs-hero">
+      <p class="cs-kicker">Corporate social: LinkedIn, Instagram and X</p>
+      <h2 class="cs-title">What M&amp;S stands for on its corporate channels, and what people respond to</h2>
+      <p class="cs-lede" id="cs-lede">M&amp;S posts most about <b data-draw="cs_top_mix" data-source="cs_summary" data-field="top_mix" data-row="0">—</b> (<span data-draw="cs_top_mix_share" data-source="cs_summary" data-field="top_mix_share" data-row="0">—</span> of posts). <b data-draw="cs_top_idx" data-source="cs_summary" data-field="top_idx" data-row="0">—</b> earns the most for its share, at <span data-draw="cs_top_idx_value" data-source="cs_summary" data-field="top_idx_value" data-row="0">—</span> a typical post on the same channel, while <b data-draw="cs_low_idx" data-source="cs_summary" data-field="low_idx" data-row="0">—</b> earns the least, at <span data-draw="cs_low_idx_value" data-source="cs_summary" data-field="low_idx_value" data-row="0">—</span>.</p>
+      <p class="cs-window" id="cs-window">Covers <span data-draw="cs_n" data-source="cs_summary" data-field="posts" data-row="0">—</span> posts from the M&amp;S company page on LinkedIn, @marksandspencernews on Instagram and @MandSnews on X, from <span data-draw="cs_first" data-source="cs_summary" data-field="first_date" data-row="0">—</span> to <span data-draw="cs_last" data-source="cs_summary" data-field="last_date" data-row="0">—</span>.</p>
+    </header>
+
+    <div class="cs-channels" id="cs-channels">
+      <article class="cs-channel" id="cs-channel-linkedin" data-platform="LinkedIn">
+        <p class="cs-ch-name"><span class="cs-dot cs-c-LinkedIn"></span>LinkedIn</p>
+        <p class="cs-ch-handle">M&amp;S company page</p>
+        <p class="cs-ch-big" data-draw="cs_ch_per_post" data-platform="LinkedIn" data-source="cs_channels" data-field="per_post" data-where="platform=LinkedIn">—</p>
+        <p class="cs-ch-label">engagements per post</p>
+        <dl class="cs-ch-stats">
+          <div><dt>Posts</dt><dd data-draw="cs_ch_posts" data-platform="LinkedIn" data-source="cs_channels" data-field="posts" data-where="platform=LinkedIn">—</dd></div>
+          <div><dt>A week</dt><dd data-draw="cs_ch_week" data-platform="LinkedIn" data-source="cs_channels" data-field="per_week" data-where="platform=LinkedIn">—</dd></div>
+          <div><dt>Engagements</dt><dd data-draw="cs_ch_eng" data-platform="LinkedIn" data-source="cs_channels" data-field="engagements" data-where="platform=LinkedIn">—</dd></div>
+        </dl>
+        <p class="cs-ch-note">Most posted: <b data-draw="cs_ch_theme" data-platform="LinkedIn" data-source="cs_channels" data-field="top_theme" data-where="platform=LinkedIn">—</b></p>
+        <p class="cs-ch-note">Best format: <b data-draw="cs_ch_format" data-platform="LinkedIn" data-source="cs_channels" data-field="best_format" data-where="platform=LinkedIn">—</b></p>
+      </article>
+      <article class="cs-channel" id="cs-channel-instagram" data-platform="Instagram">
+        <p class="cs-ch-name"><span class="cs-dot cs-c-Instagram"></span>Instagram</p>
+        <p class="cs-ch-handle">@marksandspencernews</p>
+        <p class="cs-ch-big" data-draw="cs_ch_per_post" data-platform="Instagram" data-source="cs_channels" data-field="per_post" data-where="platform=Instagram">—</p>
+        <p class="cs-ch-label">engagements per post</p>
+        <dl class="cs-ch-stats">
+          <div><dt>Posts</dt><dd data-draw="cs_ch_posts" data-platform="Instagram" data-source="cs_channels" data-field="posts" data-where="platform=Instagram">—</dd></div>
+          <div><dt>A week</dt><dd data-draw="cs_ch_week" data-platform="Instagram" data-source="cs_channels" data-field="per_week" data-where="platform=Instagram">—</dd></div>
+          <div><dt>Engagements</dt><dd data-draw="cs_ch_eng" data-platform="Instagram" data-source="cs_channels" data-field="engagements" data-where="platform=Instagram">—</dd></div>
+        </dl>
+        <p class="cs-ch-note">Most posted: <b data-draw="cs_ch_theme" data-platform="Instagram" data-source="cs_channels" data-field="top_theme" data-where="platform=Instagram">—</b></p>
+        <p class="cs-ch-note">Best format: <b data-draw="cs_ch_format" data-platform="Instagram" data-source="cs_channels" data-field="best_format" data-where="platform=Instagram">—</b></p>
+      </article>
+      <article class="cs-channel" id="cs-channel-x" data-platform="X">
+        <p class="cs-ch-name"><span class="cs-dot cs-c-X"></span>X</p>
+        <p class="cs-ch-handle">@MandSnews</p>
+        <p class="cs-ch-big" data-draw="cs_ch_per_post" data-platform="X" data-source="cs_channels" data-field="per_post" data-where="platform=X">—</p>
+        <p class="cs-ch-label">engagements per post</p>
+        <dl class="cs-ch-stats">
+          <div><dt>Posts</dt><dd data-draw="cs_ch_posts" data-platform="X" data-source="cs_channels" data-field="posts" data-where="platform=X">—</dd></div>
+          <div><dt>A week</dt><dd data-draw="cs_ch_week" data-platform="X" data-source="cs_channels" data-field="per_week" data-where="platform=X">—</dd></div>
+          <div><dt>Engagements</dt><dd data-draw="cs_ch_eng" data-platform="X" data-source="cs_channels" data-field="engagements" data-where="platform=X">—</dd></div>
+        </dl>
+        <p class="cs-ch-note">Most posted: <b data-draw="cs_ch_theme" data-platform="X" data-source="cs_channels" data-field="top_theme" data-where="platform=X">—</b></p>
+        <p class="cs-ch-note">Best format: <b data-draw="cs_ch_format" data-platform="X" data-source="cs_channels" data-field="best_format" data-where="platform=X">—</b></p>
+      </article>
+    </div>
+
+    <div class="cs-block" id="cs-mix">
+      <h3 class="cs-h3" id="cs-mix-heading">What M&amp;S talks about: share of corporate posts by theme</h3>
+      <p class="cs-help">Bars show each theme's share of all corporate posts. The columns on the right show its share of each channel's posts.</p>
+      <div class="cs-mix-head" aria-hidden="true"><span></span><span></span><span class="cs-c-text-LinkedIn">LinkedIn</span><span class="cs-c-text-Instagram">Instagram</span><span class="cs-c-text-X">X</span></div>
+      <div class="cs-mix" data-draw="cs_mix" data-source="cs_theme_mix"></div>
+    </div>
+
+    <div class="cs-block" id="cs-drivers">
+      <h3 class="cs-h3" id="cs-drivers-heading">What drives engagement: each theme against the channel's average post</h3>
+      <p class="cs-help">1× is a typical post on that channel. Dots to the right beat it, dots to the left fall short. The black bar is all three channels together. Themes with fewer than three posts on a channel have no dot there.</p>
+      <div class="cs-legend" aria-hidden="true"><span><i class="cs-dot cs-c-LinkedIn"></i>LinkedIn</span><span><i class="cs-dot cs-c-Instagram"></i>Instagram</span><span><i class="cs-dot cs-c-X"></i>X</span><span><i class="cs-allkey"></i>All channels</span></div>
+      <div class="cs-chart" data-draw="cs_dots" data-source="cs_theme_index"></div>
+    </div>
+
+    <div class="cs-block" id="cs-formats">
+      <h3 class="cs-h3" id="cs-formats-heading">Engagement by post format, against each channel's average post</h3>
+      <p class="cs-help">Green cells beat a typical post on that channel, red ones fall short. The small number is how many posts used that format. Reposts are posts the account shared with its own comment on top, and they're also counted in their format row.</p>
+      <div class="ms-scroll">
+        <table class="cs-fmt" id="cs-format-table" data-source="cs_format_index">
+          <thead><tr><th>Format</th><th>LinkedIn</th><th>Instagram</th><th>X</th></tr></thead>
+          <tbody data-draw="cs_format_rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="cs-block" id="cs-top">
+      <h3 class="cs-h3" id="cs-top-heading">The three most engaging posts on each channel</h3>
+      <div class="cs-top-grid">
+        <div class="cs-top-col" id="cs-top-linkedin"><p class="cs-top-name"><span class="cs-dot cs-c-LinkedIn"></span>LinkedIn</p><ol class="cs-top-list" data-draw="cs_top" data-platform="LinkedIn" data-source="cs_top_posts"></ol></div>
+        <div class="cs-top-col" id="cs-top-instagram"><p class="cs-top-name"><span class="cs-dot cs-c-Instagram"></span>Instagram</p><ol class="cs-top-list" data-draw="cs_top" data-platform="Instagram" data-source="cs_top_posts"></ol></div>
+        <div class="cs-top-col" id="cs-top-x"><p class="cs-top-name"><span class="cs-dot cs-c-X"></span>X</p><ol class="cs-top-list" data-draw="cs_top" data-platform="X" data-source="cs_top_posts"></ol></div>
+      </div>
+    </div>
+
+    <details class="ms-details" id="cs-method">
+      <summary>How this is worked out</summary>
+      <ul>
+        <li>Covers the M&amp;S corporate LinkedIn page, @marksandspencernews on Instagram and @MandSnews on X over the last 12 months. The consumer @marksandspencer accounts aren't included.</li>
+        <li>Posts by other accounts that show up on these feeds, such as a Cabinet Office post on the LinkedIn page, are left out. The company page's own reposts are kept.</li>
+        <li>Engagements add up likes or reactions, comments and shares. On X, shares are reposts plus quotes. Views aren't counted, and Instagram doesn't give shares.</li>
+        <li>Each post gets one theme from the words it uses. A post naming an MP, MSP or minister goes to Public affairs. A handful of posts with no caption or no clear theme are left out of the theme charts.</li>
+        <li>The "times a typical post" figure compares a theme's engagements with what the same number of average posts on the same channels would get. It stops LinkedIn's bigger numbers drowning out X. A single big post, like the Christmas ad, can lift a small theme a long way.</li>
+        <li>Follower numbers aren't in the LinkedIn and Instagram data, so engagement rates aren't shown.</li>
+      </ul>
+    </details>
+  </section>
+  <section class="ms-section cs ss" id="stories" role="tabpanel" hidden>
+    <header class="cs-hero" id="ss-hero">
+      <p class="cs-kicker">Corporate and brand crossover: corporate channels and the M&amp;S brand Instagram accounts</p>
+      <h2 class="cs-title">Which corporate stories make it onto the brand channels, and how they do there</h2>
+      <p class="cs-lede" id="ss-lede"><b data-draw="ss_both" data-source="ss_summary" data-field="both" data-row="0">—</b> of the <span data-draw="ss_total" data-source="ss_summary" data-field="stories" data-row="0">—</span> stories tracked turn up on both sides. On the brand channels, <b data-draw="ss_best" data-source="ss_summary" data-field="best" data-row="0">—</b> does best, at <span data-draw="ss_best_index" data-source="ss_summary" data-field="best_index" data-row="0">—</span> a typical post there, and <b data-draw="ss_worst" data-source="ss_summary" data-field="worst" data-row="0">—</b> does worst, at <span data-draw="ss_worst_index" data-source="ss_summary" data-field="worst_index" data-row="0">—</span>.</p>
+      <p class="cs-window" id="ss-window">Compares <span data-draw="ss_corp_n" data-source="ss_summary" data-field="corporate_posts" data-row="0">—</span> posts from the corporate channels on the Corporate social tab with <span data-draw="ss_brand_n" data-source="ss_summary" data-field="brand_posts" data-row="0">—</span> posts from @marksandspencer and @marksandspencerfood on Instagram.</p>
+    </header>
+
+    <div class="cs-block" id="ss-reach">
+      <h3 class="cs-h3" id="ss-reach-heading">How many posts tell each story, corporate channels against brand channels</h3>
+      <p class="cs-help">Bars to the left count corporate posts, bars to the right count brand posts. Faded rows are told on one side only.</p>
+      <div class="ss-fly-head" aria-hidden="true"><span class="ss-fly-left"><i class="cs-dot ss-dot-corp"></i>Corporate channels</span><span></span><span class="ss-fly-right"><i class="cs-dot ss-dot-brand"></i>Brand channels</span></div>
+      <div class="ss-fly" data-draw="ss_butterfly" data-source="ss_stories"></div>
+    </div>
+
+    <div class="cs-block" id="ss-perf">
+      <h3 class="cs-h3" id="ss-perf-heading">How each story performs on each side, against a typical post on the same account</h3>
+      <p class="cs-help">1× is a typical post on that account. A story needs three posts on a side to get a dot there. The grey line joins the two sides where both have one.</p>
+      <div class="cs-legend" aria-hidden="true"><span><i class="cs-dot ss-dot-corp"></i>Corporate channels</span><span><i class="cs-dot ss-dot-brand"></i>Brand channels</span></div>
+      <div class="cs-chart" data-draw="ss_dots" data-source="ss_stories"></div>
+    </div>
+
+    <div class="cs-block" id="ss-top">
+      <h3 class="cs-h3" id="ss-top-heading">Brand posts that carried a corporate story best, against their own account's average</h3>
+      <ol class="cs-top-list ss-top-list" data-draw="ss_top" data-source="ss_top_brand"></ol>
+    </div>
+
+    <details class="ms-details" id="ss-method">
+      <summary>How this is worked out</summary>
+      <ul>
+        <li>Brand channels are @marksandspencer and @marksandspencerfood on Instagram. Style and Man aren't included. The window is the last 12 months. If a scrape returns less than that for an account, that account covers a shorter period: when this was set up, @marksandspencer only went back to mid-July 2026.</li>
+        <li>Only posts made by M&amp;S accounts are counted. Collaborations owned by creators that appear on the brand feeds are left out.</li>
+        <li>A story is matched from the words in a post, against a fixed list of 20. A post can carry more than one story.</li>
+        <li>"Times a typical post" compares a story's engagements with what the same number of average posts on the same accounts would get. It stops the brand accounts' much bigger audiences drowning out the corporate channels. A single big post, like the Christmas ad, can lift a story a long way.</li>
+        <li>Engagements add up likes or reactions, comments and shares, as on the other tabs. Instagram doesn't give shares.</li>
+      </ul>
+    </details>
+  </section>
+</div>
+
+<p class="page-foot" id="refreshed">Data last refreshed <span id="built">—</span>, covering <span id="win-start">—</span> to <span id="win-end">—</span>.</p>
+</main>
+<script src="js/leaders.js"></script>
+<script src="js/corporate.js"></script>
+<script src="js/stories.js"></script>
+<script src="js/tabs.js"></script>
+<script>
+  fetch('data/meta.json', { cache: 'no-cache' }).then((r) => r.json()).then((m) => {
+    const day = (s) => d3.utcFormat('%-d %B %Y')(new Date(s.length === 10 ? s + 'T00:00:00Z' : s));
+    document.getElementById('built').textContent = day(m.built_at) + ' at ' + d3.timeFormat('%H:%M')(new Date(m.built_at));
+    document.getElementById('win-start').textContent = day(m.window_start);
+    document.getElementById('win-end').textContent = day(m.window_end);
+  }).catch(() => { document.getElementById('refreshed').hidden = true; });
+</script>
+</body>
+</html>
