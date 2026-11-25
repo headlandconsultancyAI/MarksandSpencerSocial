@@ -1,12 +1,12 @@
 {
- "built_at": "2026-11-24T19:00:10Z",
- "window_start": "2025-11-24",
- "window_end": "2026-11-24",
+ "built_at": "2026-11-25T18:06:17Z",
+ "window_start": "2025-11-25",
+ "window_end": "2026-11-25",
  "sources": {
   "linkedin": {
    "fetched": false,
    "scraped_posts": 0,
-   "posts_in_window": 402
+   "posts_in_window": 400
   },
   "instagram": {
    "fetched": false,
