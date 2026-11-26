@@ -17,7 +17,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
-from taxonomy import tag_topic, tag_theme, tag_stories  # noqa: E402
+from taxonomy import tag_topic, tag_theme, tag_stories, STORY_NAMES  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, 'raw')
@@ -194,6 +194,8 @@ def main():
         fresh = BUILDERS[plat](raw, cfg, skipped) if isinstance(raw, list) else []
         key = lambda r: r['post_id'] + '|' + r['account']  # the same post can sit on two brand feeds
         merged = {key(r): r for r in old if (r.get('account'), r.get('account_type')) in known}
+        for r in merged.values():  # drop stories that have since been taken off the list
+            r['stories'] = '|'.join(s for s in (r.get('stories') or '').split('|') if s in STORY_NAMES)
         for r in fresh:
             merged[key(r)] = r  # a fresh scrape wins, so engagement counts update
         rows = sorted((r for r in merged.values() if S <= r['date'] <= E), key=lambda r: (r['date'], r['post_id']), reverse=True)

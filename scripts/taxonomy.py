@@ -59,17 +59,18 @@ def tag_theme(text):
 
 # ---- Stories ----
 # Stories that the corporate channels tell, matched in any post's text. A post can carry several.
+# Brand and product stories (Sparks, Picky Bits, Percy Pig and Colin, Christmas food) were taken out
+# on 26 Nov 2026, so the list only holds corporate stories.
 STORIES = [
- ('Christmas ad', r"christmas ad|mr (and|&) mrs claus|james norton|lucy punch|heaven is a place on earth"),
+ ('Christmas ad', r"christmas ad|mrs claus|james norton|lucy punch|heaven is a place on earth"),
  ('Gillian Anderson', r"gillian anderson|chief compliments"),
- ('Sparks', r"\bsparks\b"),
  ('Nutrient Dense and fibre', r"nutrient dense|fibre|better with beans"),
  ('Remarksable value and prices', r"remarksable|remarkable value|trusted value|lowering prices|price drop|holding our .{0,30}prices"),
  ('Plan A, farming and Fairtrade', r"plan a\b|planaforfarming|select farm|fairtrade|ben fogle|regenerative|wildfarmed"),
  ('Store openings', r"now open|we.re open|officially open|re-?opened|brand[- ]new (m&s )?(food )?(store|foodhall)|flagship"),
- ('Percy Pig and Colin', r"percy pig|\bpercy\b|colin the caterpillar"),
  ('100 years of fashion', r"100 years (of|in) fashion|100yearsoffashion|london fashion week|\blfw\b|catwalk"),
- ('Australia and international', r"australia|\bcoles\b|nordstrom|zalora|the iconic|al-futtaim|\buae\b"),
+ # "the iconic" on its own is left out: it matched everyday phrases like "the iconic sandwich".
+ ('Australia and international', r"australia|\bcoles\b|nordstrom|zalora|theiconic|al-futtaim|\buae\b"),
  ('Marks & Start and careers', r"marks ?& ?start|marks and start|early careers|graduate|careers? at m&s|notjustanyjob"),
  ('YoungMinds', r"youngminds|young minds|hello ?yellow"),
  ('Food waste partnerships', r"neighbourly|too good to go|food waste|surplus food"),
@@ -77,9 +78,21 @@ STORIES = [
  ('MP and MSP visits', r"\b(mps?|msps?|mlas?)\b|@\w+mp\b|minister\b"),
  ('Football', r"lioness|england (football|team|squad)|scotland national|world cup|euros\b|\bfootball\b"),
  ('Breast Cancer Now', r"breast cancer"),
- ('Christmas food', r"christmas (food|range|menu|dinner)|festive food|mince pies?|panettone"),
- ('Picky Bits', r"picky bits"),
 ]
+STORY_NAMES = {n for n, _ in STORIES}
+
+# Wording that looks like a story but isn't, removed from the text before that story is matched.
+STORY_EXCLUDE = {
+ # Ordering windows and seasonal shops "opening" aren't new stores.
+ 'Store openings': r"(food to order|to order|christmas shop|pre-?orders?|bookings?|entries|applications?|voting|the sale|pop-?up)\W+(is |are )?(now |officially )?(now |officially )?open",
+}
+
+
 def tag_stories(text):
     t = (text or '').lower()
-    return '|'.join(n for n, rx in STORIES if re.search(rx, t))
+    out = []
+    for n, rx in STORIES:
+        s = re.sub(STORY_EXCLUDE[n], ' ', t) if n in STORY_EXCLUDE else t
+        if re.search(rx, s):
+            out.append(n)
+    return '|'.join(out)
