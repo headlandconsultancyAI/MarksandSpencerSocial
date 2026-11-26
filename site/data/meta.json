@@ -1,5 +1,5 @@
 {
- "built_at": "2026-11-26T09:02:14Z",
+ "built_at": "2026-11-26T09:22:35Z",
  "window_start": "2025-11-26",
  "window_end": "2026-11-26",
  "sources": {
@@ -10,8 +10,8 @@
   },
   "instagram": {
    "fetched": true,
-   "scraped_posts": 10,
-   "posts_in_window": 1510
+   "scraped_posts": 2802,
+   "posts_in_window": 2804
   },
   "x": {
    "fetched": true,
