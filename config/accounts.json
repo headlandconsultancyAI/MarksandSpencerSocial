@@ -10,8 +10,7 @@
     {"name": "Mark Lemming", "role": "Managing Director, International", "linkedin": "mark-lemming-925987b"},
     {"name": "Alison Dolan", "role": "Chief Financial Officer", "linkedin": "alisonanndolan"},
     {"name": "Sacha Berendji", "role": "Operations Director", "linkedin": "sacha-berendji-a7242524b"},
-    {"name": "James", "role": "Home Visual Merchandising, M&S Insider", "instagram": "marksandspencer_james",
-     "note": "Not tracked yet: add marksandspencer_james to the Instagram Apify task"}
+    {"name": "James", "role": "Home Visual Merchandising, M&S Insider", "instagram": "marksandspencer_james"}
   ],
   "corporate": {
     "linkedin": {"name": "M&S (company page)", "company": "marks-and-spencer", "author_name": "Marks and Spencer", "role": "Corporate LinkedIn page"},
