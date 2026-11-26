@@ -78,6 +78,13 @@ def main():
         except FileNotFoundError:
             pass
     active = {p: t for p, t in TASKS.items() if t}
+    print('Apify task variables this job received:')
+    for p in TASKS:
+        print(f'  APIFY_TASK_{p.upper()}: {"set" if p in active else "NOT SET"}')
+    if not active:
+        sys.exit('None of the APIFY_TASK_ variables reached this job, so nothing can be fetched '
+                 'and the data has not changed. Add them as repository variables under '
+                 'Settings > Secrets and variables > Actions > Variables.')
     for p in TASKS:
         if p not in active:
             warn(f'No Apify task set for {p}. Keeping its last data.')
