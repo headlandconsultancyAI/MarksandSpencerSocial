@@ -1,27 +1,27 @@
 {
- "built_at": "2026-11-26T17:50:39Z",
- "window_start": "2025-11-26",
- "window_end": "2026-11-26",
+ "built_at": "2026-11-27T17:35:43Z",
+ "window_start": "2025-11-27",
+ "window_end": "2026-11-27",
  "sources": {
   "linkedin": {
-   "fetched": true,
-   "scraped_posts": 2,
-   "posts_in_window": 399
+   "fetched": false,
+   "scraped_posts": 0,
+   "posts_in_window": 395
   },
   "instagram": {
    "fetched": true,
-   "scraped_posts": 9,
-   "posts_in_window": 2804
+   "scraped_posts": 12,
+   "posts_in_window": 2806
   },
   "x": {
    "fetched": true,
    "scraped_posts": 81,
-   "posts_in_window": 44
+   "posts_in_window": 43
   },
   "tiktok": {
    "fetched": true,
-   "scraped_posts": 29,
-   "posts_in_window": 29
+   "scraped_posts": 30,
+   "posts_in_window": 30
   }
  }
 }
